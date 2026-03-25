@@ -1,4 +1,3 @@
-# Base image PHP + FPM
 FROM php:8.2-fpm
 
 # Install NGINX
@@ -13,5 +12,5 @@ COPY index.php /var/www/html/index.php
 # Expose port 80
 EXPOSE 80
 
-# Start PHP-FPM and NGINX
-CMD service php8.2-fpm start && nginx -g "daemon off;"
+# Start both PHP-FPM and NGINX in foreground
+CMD php-fpm -F & nginx -g "daemon off;"
