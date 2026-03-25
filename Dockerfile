@@ -1,14 +1,22 @@
-# PHP + FPM image
 FROM php:8.2-fpm
 
-# Telepíts Nginx-t
-RUN apt-get update && apt-get install -y nginx
+# Szükséges csomagok + Composer
+RUN apt-get update && apt-get install -y nginx git unzip \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');"
 
-# NGINX konfiguráció másolása
-COPY nginx.conf /etc/nginx/nginx.conf
+WORKDIR /var/www/html
+
+# Composer dependencies telepítése (Whoops is itt lesz)
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
 
 # Projekt fájlok másolása
-COPY . /var/www/html
+COPY . .
 
-# NGINX és PHP-FPM egyidejű futtatása
+# Nginx konfiguráció
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Nginx + PHP-FPM indítása
 CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
