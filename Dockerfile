@@ -1,14 +1,14 @@
+# PHP + FPM image
 FROM php:8.2-fpm
 
-# Telepítjük az NGINX-et
-RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
+# Telepíts Nginx-t
+RUN apt-get update && apt-get install -y nginx
 
-# Másoljuk a fájlokat
-COPY index.php /var/www/html/index.php
+# NGINX konfiguráció másolása
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
-EXPOSE 80
+# Projekt fájlok másolása
+COPY . /var/www/html
 
-# Indítsuk PHP-FPM-et a default socketen, majd NGINX-et foreground-ban
-CMD php-fpm -F & nginx -g "daemon off;"
+# NGINX és PHP-FPM egyidejű futtatása
+CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
