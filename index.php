@@ -1,6 +1,12 @@
 <?php
 echo "<h1>Railway PHP + NGINX működik!</h1>";
 
+require __DIR__ . '/vendor/autoload.php';
+
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 ?>
 
 <!DOCTYPE html>
