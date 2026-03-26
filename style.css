@@ -11,6 +11,7 @@
     --shadow-light: color-mix(in srgb, black 10%, transparent);
     --shadow-heavy: color-mix(in srgb, black 15%, transparent);
     --white-soft: color-mix(in srgb, white 80%, transparent);
+    
 }
 
 body {
