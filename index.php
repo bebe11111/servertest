@@ -35,7 +35,13 @@
 
     $queryString = $query ? '?' . implode('&', $query) : '';
 
-    $imageUrl = "https://picsum.photos/id/$id/$width/$height$queryString";
+    $imageUrl = "https://json-server-urla.onrender.com/";
+
+    $apiUrl = "https://js-server.onrender.com/users";
+
+    // Lekérés
+    $response = file_get_contents($apiUrl);
+    $users = json_decode($response, true);
 
 ?>
 
@@ -48,6 +54,15 @@
     <title><?= $title ?></title>
 </head>
 <body>
+    <header>
+        <h1>Felhasználók</h1>
+
+        <ul>
+            <?php foreach ($users as $user): ?>
+            <li><?php echo $user['name']; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </header>
     <main>
         <h1><?= $title ?></h1>
 
