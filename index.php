@@ -35,9 +35,9 @@
 
     $queryString = $query ? '?' . implode('&', $query) : '';
 
-    $imageUrl = "https://json-server-urla.onrender.com/";
+    $imageUrl = "https://picsum.photos/id/$id/$width/$height$queryString";
 
-    $apiUrl = "https://js-server.onrender.com/users";
+    $apiUrl = "https://json-server-urla.onrender.com/";
 
     // Lekérés
     $response = file_get_contents($apiUrl);
